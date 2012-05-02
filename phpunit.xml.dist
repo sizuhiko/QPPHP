@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit backupGlobals="false"
+         verbose="true">
+    <testsuites>
+        <testsuite name="QueryPath php injector extension test suite">
+            <directory>test/QueryPath/Extensions</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory>src/QueryPath/Extensions</directory>
+        </whitelist>
+    </filter>
+</phpunit>

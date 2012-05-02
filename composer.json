@@ -1,0 +1,5 @@
+{
+  "require": {
+    "querypath/QueryPath": ">=2.0.0"
+  }
+}
