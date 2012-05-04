@@ -51,4 +51,9 @@ class QPListTests extends PHPUnit_Framework_TestCase {
     $result = htmlqp($this->qp->php());
     $this->assertEquals('php:include(0)', $result->find('#two')->attr('data-url'));
   }
+  public function testAppendPHP() {
+    $this->qp->find('#two')->appendPHP('echo "appendPHP in #two"');
+    $this->assertRegExp('/<div id="three">Inner text.<\/div>\s*<\?php echo "appendPHP in #two" \?>/',$this->qp->php());
+  }
+
 }
