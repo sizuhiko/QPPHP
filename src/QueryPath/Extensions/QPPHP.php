@@ -32,6 +32,28 @@ class QPPHP implements QueryPathExtension {
     $tag = new QPPHPCodeTag($code);
     return $this->qp->after($tag->__toString());
   }
+  public function wrapPHP($codeBefore, $codeAfter) {
+    foreach($this->qp->getIterator() as $node) {
+      $node->wrapAllPHP($codeBefore, $codeAfter);
+    }
+    return $this->qp;
+  }
+  public function wrapInnerPHP($codeBefore, $codeAfter) {
+    foreach($this->qp->getIterator() as $node) {
+      $node->contents()->wrapAllPHP($codeBefore, $codeAfter);
+    }
+    return $this->qp;
+  }
+  public function wrapAllPHP($codeBefore, $codeAfter) {
+    return $this->qp
+      ->slice(0, 1)
+        ->beforePHP($codeBefore)
+      ->end()
+      ->slice(-1)
+        ->afterPHP($codeAfter)
+      ->end();
+  }
+
   public function php() {
     $html = QPPHPCode::toPHP($this->qp->top()->innerHTML());
     $html = QPPHPCodeTag::toPHP($html);

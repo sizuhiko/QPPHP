@@ -67,5 +67,35 @@ class QPListTests extends PHPUnit_Framework_TestCase {
     $this->qp->find('.class-two')->afterPHP('echo "add php after .class-two"');
     $this->assertRegExp('/<span class="class-two">Nada<\/span>\s*<\?php echo "add php after \.class-two" \?>/',$this->qp->php());
   }
+  public function testWrapPHP() {
+    $this->qp->find('ul')->wrapPHP('if(count($list) > 0):', 'endif;');
+    $result = $this->qp->php();
+    $this->assertRegExp('/<\?php if\(count\(\$list\) > 0\): \?>\s*<ul>/', $result);
+    $this->assertRegExp('/<\/ul>\s*<\?php endif; \?>/', $result);
+  }
+  public function testWrapPhpEachElement() {
+    $this->qp->find('ul li')->wrapPHP('if(count($list) > $i++):', 'endif;');
+    $result = $this->qp->php();
+    $this->assertRegExp('/<\?php if\(count\(\$list\) > \$i\+\+\): \?><li class="Odd" id="li-one">Odd<\/li><\?php endif; \?>/', $result);
+    $this->assertRegExp('/<\?php if\(count\(\$list\) > \$i\+\+\): \?><li class="even" id="li-ten">Even<\/li><\?php endif; \?>/', $result);
+  }
+  public function testWrapAllPHP() {
+    $this->qp->find('ul li')->wrapAllPHP('if(count($list) > 0):', 'endif;');
+    $result = $this->qp->php();
+    $this->assertRegExp('/<ul>\s*<\?php if\(count\(\$list\) > 0\): \?>/', $result);
+    $this->assertRegExp('/<\?php endif; \?>\s*<\/ul>/', $result);
+  }
+  public function testWrapInnerPHP() {
+    $this->qp->find('ul')->wrapInnerPHP('if(count($list) > 0):', 'endif;');
+    $result = $this->qp->php();
+    $this->assertRegExp('/<ul>\s*<\?php if\(count\(\$list\) > 0\): \?>/', $result);
+    $this->assertRegExp('/<\?php endif; \?>\s*<\/ul>/', $result);
+  }
+  public function testWrapInnerPhpEachElement() {
+    $this->qp->find('ul li')->wrapInnerPHP('if(count($list) > $i++):', 'endif;');
+    $result = $this->qp->php();
+    $this->assertRegExp('/<li class="Odd" id="li-one"><\?php if\(count\(\$list\) > \$i\+\+\): \?>Odd<\?php endif; \?><\/li>/', $result);
+    $this->assertRegExp('/<li class="even" id="li-ten"><\?php if\(count\(\$list\) > \$i\+\+\): \?>Even<\?php endif; \?><\/li>/', $result);
+  }
 
 }
