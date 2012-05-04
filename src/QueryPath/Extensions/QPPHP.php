@@ -59,7 +59,7 @@ class QPPHP implements QueryPathExtension {
   }
 
   public function php() {
-    $html = QPPHPCode::toPHP($this->qp->top()->innerHTML());
+    $html = QPPHPCode::toPHP($this->qp->top()->html());
     $html = QPPHPCodeTag::toPHP($html);
     return $html;
   }
@@ -104,7 +104,7 @@ class QPPHPCodeTag extends QPPHPCode {
     return '<php id="'.$this->id.'" />';
   }
   public static function toPHP($html) {
-    $cnt = preg_match_all("/<php id\s*=\s*['\"]([a-zA-Z0-9]+)['\"]\s*\/>/", $html, $matches);
+    $cnt = preg_match_all("/<php id\s*=\s*['\"]([a-zA-Z0-9]+)['\"]\><\/php>/", $html, $matches);
     if($cnt == 0) return $html;
     foreach ($matches[1] as $key => $value) {
       if(isset(self::$map[$value])) {
