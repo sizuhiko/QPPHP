@@ -97,5 +97,9 @@ class QPListTests extends PHPUnit_Framework_TestCase {
     $this->assertRegExp('/<li class="Odd" id="li-one"><\?php if\(count\(\$list\) > \$i\+\+\): \?>Odd<\?php endif; \?><\/li>/', $result);
     $this->assertRegExp('/<li class="even" id="li-ten"><\?php if\(count\(\$list\) > \$i\+\+\): \?>Even<\?php endif; \?><\/li>/', $result);
   }
+  public function testReplaceWithPHP() {
+    $this->qp->find('#three')->replaceWithPHP('echo "Inner Text into #three"');
+    $this->assertRegExp('/<div id="two" class="class-one" data-url="php:include\(0\)">\s*<\?php echo "Inner Text into #three" \?>\s*<\/div>/',$this->qp->php());
+  }
 
 }

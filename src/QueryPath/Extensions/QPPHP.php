@@ -53,6 +53,10 @@ class QPPHP implements QueryPathExtension {
         ->afterPHP($codeAfter)
       ->end();
   }
+  public function replaceWithPHP($code) {
+    $tag = new QPPHPCodeTag($code);
+    return $this->qp->replaceWith($tag->__toString());
+  }
 
   public function php() {
     $html = QPPHPCode::toPHP($this->qp->top()->innerHTML());
