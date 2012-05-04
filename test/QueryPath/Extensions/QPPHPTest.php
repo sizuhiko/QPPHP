@@ -20,7 +20,7 @@ class QPListTests extends PHPUnit_Framework_TestCase {
       </head>
       <body>
         <div id="one">
-          <div id="two" class="class-one">
+          <div id="two" class="class-one" data-url="php:include(0)">
             <div id="three">Inner text.</div>
           </div>
         </div>
@@ -44,6 +44,7 @@ class QPListTests extends PHPUnit_Framework_TestCase {
 
   public function testAttrPHP() {
     $this->qp->find('#one')->attrPHP('class', 'echo $oneClassName');
-    $this->assertTag(array('id'=>'one', 'attributes'=>array('class', '<?php echo $oneClassName ?>')), $this->qp->php());
+    $result = htmlqp($this->qp->php());
+    $this->assertEquals('<?php echo $oneClassName ?>', $result->find('#one')->attr('class'));
   }
 }
