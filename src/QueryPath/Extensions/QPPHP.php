@@ -24,6 +24,14 @@ class QPPHP implements QueryPathExtension {
     $tag = new QPPHPCodeTag($code);
     return $this->qp->prepend($tag->__toString());
   }
+  public function beforePHP($code) {
+    $tag = new QPPHPCodeTag($code);
+    return $this->qp->before($tag->__toString());
+  }
+  public function afterPHP($code) {
+    $tag = new QPPHPCodeTag($code);
+    return $this->qp->after($tag->__toString());
+  }
   public function php() {
     $html = QPPHPCode::toPHP($this->qp->top()->innerHTML());
     $html = QPPHPCodeTag::toPHP($html);

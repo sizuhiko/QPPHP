@@ -59,5 +59,13 @@ class QPListTests extends PHPUnit_Framework_TestCase {
     $this->qp->find('#two')->prependPHP('echo "prependPHP in #two"');
     $this->assertRegExp('/<\?php echo "prependPHP in #two" \?>\s*<div id="three">Inner text.<\/div>/',$this->qp->php());
   }
+  public function testBeforePHP() {
+    $this->qp->find('.class-two')->beforePHP('echo "add php before .class-two"');
+    $this->assertRegExp('/<\?php echo "add php before \.class-two" \?>\s*<span class="class-two">Nada<\/span>/',$this->qp->php());
+  }
+  public function testAfterPHP() {
+    $this->qp->find('.class-two')->afterPHP('echo "add php after .class-two"');
+    $this->assertRegExp('/<span class="class-two">Nada<\/span>\s*<\?php echo "add php after \.class-two" \?>/',$this->qp->php());
+  }
 
 }
