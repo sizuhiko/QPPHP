@@ -9,7 +9,7 @@ require_once 'PHPUnit/Autoload.php';
 require_once 'vendor/querypath/QueryPath/src/QueryPath/QueryPath.php';
 require_once 'src/QueryPath/Extensions/QPPHP.php';
 
-class QPListTests extends PHPUnit_Framework_TestCase {
+class QPPHPTests extends PHPUnit_Framework_TestCase {
 
   protected $qp;
 
