@@ -47,6 +47,12 @@ class QPPHPTests extends PHPUnit_Framework_TestCase {
     $result = htmlqp($this->qp->php());
     $this->assertEquals('<?php echo $oneClassName ?>', $result->find('#one')->attr('class'));
   }
+  public function testMultiAttrPHP() {
+    $this->qp->find('ul li')->attrPHP('class', 'echo ($i % 2) == 0 ? "Odd" : "even"');
+    $result = $this->qp->php();
+    $this->assertRegExp('/<li class="<\?php echo \(\$i % 2\) == 0 \? "Odd" : "even" \?>" id="li-one">Odd<\/li>/', $result);
+    $this->assertRegExp('/<li class="<\?php echo \(\$i % 2\) == 0 \? "Odd" : "even" \?>" id="li-ten">Even<\/li>/', $result);
+  }
   public function testNotUseAttrPHP() {
     $result = htmlqp($this->qp->php());
     $this->assertEquals('php:include(0)', $result->find('#two')->attr('data-url'));
