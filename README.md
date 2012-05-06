@@ -9,7 +9,7 @@ https://github.com/technosophos/querypath
 # Install
 
 - Please refer QueryPath installation.
-- And copy QPPHP.php to your source tree from git repository.
+- And copy src/QueryPath/Extensions/QPPHP.php to your source tree from git repository.
 - At last, include copied file, like followings:
 
 	require_once 'QueryPath/Extensions/QPPHP.php';
